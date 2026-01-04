@@ -49,6 +49,28 @@ score = model.evaluate(X_test, y_test, verbose=0)
 
 print(f"Test accuracy: {score[1]:.2f}")
 
+def sentiment_prediction(review_text):
+    text = review_text.lower()
+    text = re.sub(r'[^a-z0-9\s]', '', text)
+
+    seq = tokenizer.texts_to_sequences([text])
+    padded = pad_sequences (seq, maxlen=max_length)
+
+    prediction = model.predict(padded)[0][0]
+    return f"{'Positive' if prediction >= 0.5 else 'Negative'} (Probability was {prediction:.2f})"
+
+print()
+review = "The food was horrible"
+print(f"Review: {review}")
+print(sentiment_prediction(review))
+
+
+
+    
+
+
+
+
 
 
 
