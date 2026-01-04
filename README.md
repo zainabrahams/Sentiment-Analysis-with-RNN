@@ -5,6 +5,10 @@ This project implements a **Recurrent Neural Network (RNN)** to classify custome
 ## 📌 Overview
 The model uses Natural Language Processing (NLP) techniques to clean text data, tokenize it into sequences, and train a SimpleRNN model to understand the sentiment behind the reviews.
 
+Although the final model achieved a **strong test accuracy of 84%**, a major limitation lies in the dataset itself. Sentiment labels were not manually annotated; instead, they were inferred directly from numerical review ratings. This introduces significant noise, as a customer may write a positive review but choose not to assign a maximum rating.
+
+In the original version of the model, reviews with ratings ≥ 3.5 were labelled as positive, resulting in a test accuracy of 72%. By refining the labelling strategy, classifying reviews as positive only if the rating was ≥ 4, and negative if the rating was ≤ 3, the test accuracy improved to 84%. This improvement highlights that the model’s earlier underperformance was largely due to inconsistent and noisy sentiment labels rather than weaknesses in the model architecture itself.
+
 ## 🛠️ Tech Stack
 * **Python** (Core Logic)
 * **Pandas & NumPy** (Data Manipulation)
@@ -26,3 +30,5 @@ The model is built using a sequential architecture:
 4. **Training**: The data is split into Training (72%), Validation (8%), and Test (20%) sets.
 5. **Evaluation**: The model uses `binary_crossentropy` as the loss function and `adam` as the optimizer.
 
+## Future improvements
+Future work could focus on improving label quality by manually annotating review sentiment rather than inferring sentiment solely from numerical ratings. This would significantly reduce label noise and allow the model to learn more accurate linguistic patterns. Additionally, more advanced architectures such as LSTM or transformer-based models (e.g., BERT) could be explored to better capture contextual and semantic meaning in reviews. Incorporating techniques such as class weighting, stopword removal, and data augmentation may further improve robustness, particularly for short or sentiment-heavy reviews.

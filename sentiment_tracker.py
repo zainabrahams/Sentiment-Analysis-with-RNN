@@ -16,7 +16,8 @@ print(data.columns.tolist())
 #cleaning text (reviews)
 data["Review"] = data["Review"].str.lower()
 data["Review"] = data["Review"].replace(r'[^a-z0-9\s]', '', regex=True) #removes everything that ISN'T in the brackets
-data['sentiment'] = data['Avg Rating'].apply(lambda x: 1 if x > 3.5 else 0) #creates sentiment column with 1 for ratings above 3.5
+data = data[data['Avg Rating'] != 3] 
+data['sentiment'] = data['Avg Rating'].apply(lambda x: 1 if x >= 4 else 0) #creates sentiment column with 1 for ratings above 3.5
 data = data.dropna() #removes rows that contain missing values
 
 #tokenizing the reviews and separating the target labels for learning
@@ -60,7 +61,7 @@ def sentiment_prediction(review_text):
     return f"{'Positive' if prediction >= 0.5 else 'Negative'} (Probability was {prediction:.2f})"
 
 print()
-review = "The food was horrible"
+review = "The food was good"
 print(f"Review: {review}")
 print(sentiment_prediction(review))
 
